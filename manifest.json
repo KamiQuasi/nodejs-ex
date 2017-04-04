@@ -1,0 +1,7 @@
+{
+  "name": "new-search",
+  "short_name": "new-search",
+  "description": "New RHD Search",
+  "start_url": "/",
+  "display": "standalone"
+}

@@ -4,6 +4,7 @@ var express = require('express'),
     app     = express(),
     eps     = require('ejs'),
     morgan  = require('morgan');
+    search  = require('./search.json')
     
 Object.assign=require('object-assign')
 
@@ -76,6 +77,10 @@ app.get('/', function (req, res) {
   }
 });
 
+app.get('/search', function(req, res) {
+  res.send(search);
+});
+
 app.get('/pagecount', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
@@ -90,6 +95,11 @@ app.get('/pagecount', function (req, res) {
     res.send('{ pageCount: -1 }');
   }
 });
+
+app.use('/public', express.static('./public'));
+app.use('/fonts', express.static('./fonts'));
+app.use('/bower_components', express.static('./bower_components'));
+app.use('/src', express.static('./src'));
 
 // error handling
 app.use(function(err, req, res, next){
