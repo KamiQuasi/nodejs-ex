@@ -10,12 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 'use strict';
 
 /*
- * Polyfills loaded: HTML Imports + Custom Elements ES5 shim
- * Used in: Safari Tech Preview, Chrome
+ * Polyfills loaded: Custom Elements ES5 Shim
  */
 
 import '../bower_components/custom-elements/src/native-shim.js'
-import '../bower_components/html-imports/src/html-imports.js'
-
-import '../src/post-polyfill.js'
-import '../src/unresolved.js'

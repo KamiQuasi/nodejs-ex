@@ -1,0 +1,28 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<dom-module id="rhd-search-recommended">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]</h2>
+  </template>
+
+  <script>
+    class RHDSearchRecommended extends Polymer.Element {
+      static get is() { return 'rhd-search-recommended'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'rhd-search-recommended'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(RHDSearchRecommended.is, RHDSearchRecommended);
+  </script>
+</dom-module>

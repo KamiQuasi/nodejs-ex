@@ -1,0 +1,29 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<dom-module id="rhd-search-active-filters">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <template is="dom-repeat" items="[[filters]]">
+        <div>[[item]] <a href="#" onclick="return false;">X</a></div>
+    </template>
+  </template>
+
+  <script>
+    class RHDSearchActiveFilters extends Polymer.Element {
+      static get is() { return 'rhd-search-active-filters'; }
+      static get properties() {
+        return {
+          filters: {
+            type: Array
+          }
+        };
+      }
+    }
+
+    window.customElements.define(RHDSearchActiveFilters.is, RHDSearchActiveFilters);
+  </script>
+</dom-module>

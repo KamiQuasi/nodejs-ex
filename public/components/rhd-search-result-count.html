@@ -1,0 +1,34 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<dom-module id="rhd-search-result-count">
+  <template>
+    <style>
+      :host {
+
+      }
+      @media only screen and (max-width: 768px) {
+        :host {
+          font-weight: 600;
+        }
+      }
+    </style>
+    <template is="dom-if" if="{{count}}">
+        <span>[[count]] results found for [[term]]</span>
+    </template>
+    
+  </template>
+
+  <script>
+    class RHDSearchResultCount extends Polymer.Element {
+      static get is() { return 'rhd-search-result-count'; }
+      static get properties() {
+        return {
+          count: Number,
+          term: String
+        };
+      }
+    }
+
+    window.customElements.define(RHDSearchResultCount.is, RHDSearchResultCount);
+  </script>
+</dom-module>

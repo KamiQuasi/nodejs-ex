@@ -1,0 +1,30 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/public/components/rhd-search-result.html">
+<dom-module id="rhd-search-results">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <slot></slot>
+    <div class="results search-results-loaded">
+    <template is="dom-repeat" items="[[results.hits.hits]]">
+        <rhd-search-result result="{{item}}"></rhd-search-result>
+    </template>
+    </div>
+  </template>
+
+  <script>
+    class RHDSearchResults extends Polymer.Element {
+      static get is() { return 'rhd-search-results'; }
+      static get properties() {
+        return {
+          results: Object
+        };
+      }
+    }
+
+    window.customElements.define(RHDSearchResults.is, RHDSearchResults);
+  </script>
+</dom-module>

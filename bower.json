@@ -3,7 +3,9 @@
   "description": "New RHD Search",
   "main": "index.html",
   "dependencies": {
-    "polymer": "Polymer/polymer#^2.0.0-rc.3"
+    "polymer": "Polymer/polymer#^2.0.0-rc.3",
+    "iron-ajax": "PolymerElements/iron-ajax#^1.4.3",
+    "iron-input": "PolymerElements/iron-input#^1.0.10"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#2.0-preview",

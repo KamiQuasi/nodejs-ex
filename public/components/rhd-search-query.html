@@ -1,0 +1,52 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
+<dom-module id="rhd-search-query">
+  <template>
+    <iron-ajax auto id="ajax" url="/search" 
+    params='{"part":"snippet", "q":"[[term]]"}'
+    handle-as="json"
+    on-response="adjustResults"></iron-ajax>
+  </template>
+
+  <script>
+    class RHDSearchQuery extends Polymer.Element {
+      static get is() { return 'rhd-search-query'; }
+      static get properties() {
+        return {
+          term: String,
+          results: {
+              type: Object,
+              notify: true
+          },
+          limit: Number
+        };
+      }
+
+      adjustResults(results) {
+        let qr = results.detail.response;
+        let hits = qr ? qr.hits.hits : [];
+        let f = [];
+        let l = hits.length;
+        for(let i=0; i<l; i++) {
+          if(hits[i].fields.sys_description && hits[i].fields.sys_description.length && hits[i].fields.sys_description[0].indexOf(this.get('term')) > -1) {
+            f.push(hits[i]);
+          }
+          if(hits[i].fields.sys_tags && hits[i].fields.sys_tags.length && hits[i].fields.sys_tags.indexOf(this.get('term')) > -1) {
+            f.push(hits[i]);
+          }
+          if(hits[i].fields.sys_title && hits[i].fields.sys_title.length && hits[i].fields.sys_title[0].indexOf(this.get('term')) > -1) {
+            f.push(hits[i]);
+          }
+        }
+        if (qr) {
+          qr.hits.hits = f.slice(0, this.get('limit'));
+          qr.hits.total = f.length;
+        }
+        this.set('results', qr);
+      }
+      
+    }
+
+    window.customElements.define(RHDSearchQuery.is, RHDSearchQuery);
+  </script>
+</dom-module>

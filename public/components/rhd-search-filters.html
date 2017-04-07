@@ -1,0 +1,57 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<dom-module id="rhd-search-filters">
+  <template>
+    <style>
+      :host {
+        display: block;
+        border: 2px solid #666;
+      }
+      h2 { background: #666; color: white; margin: 0;}
+      .showBtn { 
+        display: none;
+        background: #ccc;
+        text-decoration: none;
+        border: 0;
+        height: 40px;
+        font-weight: 600;
+        font-size: 16px;
+        padding: 9px 40px;
+        transition: background .2s ease-in 0s;
+        line-height: 1.2em;
+        cursor: pointer;
+        position: relative;
+        text-align: center;
+        color: #333; 
+        width: 100%;
+        }
+
+      @media only screen and (max-width: 768px) {
+        :host {
+          display: inline-block;
+          border: none;
+        }
+        .showBtn { display: block; }
+        .control { display: none; }
+      }
+    </style>
+    <button class="showBtn">Show Filters</button>
+    <div class="control">
+      <h2>[[title]]</h2>
+      <slot></slot>
+    </div>
+  </template>
+
+  <script>
+    class RHDSearchFilters extends Polymer.Element {
+      static get is() { return 'rhd-search-filters'; }
+      static get properties() {
+        return {
+          title: String
+        };
+      }
+    }
+
+    window.customElements.define(RHDSearchFilters.is, RHDSearchFilters);
+  </script>
+</dom-module>

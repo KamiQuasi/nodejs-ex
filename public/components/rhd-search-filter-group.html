@@ -1,0 +1,29 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<dom-module id="rhd-search-filter-group">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <span>[[name]]</span>
+    <slot></slot>
+  </template>
+
+  <script>
+    class RHDSearchFilterGroup extends Polymer.Element {
+      static get is() { return 'rhd-search-filter-group'; }
+      static get properties() {
+        return {
+          name: {
+            type: String,
+            value: 'rhd-search-filter-group'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(RHDSearchFilterGroup.is, RHDSearchFilterGroup);
+  </script>
+</dom-module>

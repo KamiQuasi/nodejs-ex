@@ -1,0 +1,53 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<dom-module id="rhd-search-sort-page">
+  <template>
+    <style>
+      .tight {
+        display: none;
+      }
+      .tight button {
+          background: #ccc;
+        text-decoration: none;
+        border: 0;
+        height: 40px;
+        font-weight: 600;
+        font-size: 16px;
+        padding: 9px 40px;
+        transition: background .2s ease-in 0s;
+        line-height: 1.2em;
+        cursor: pointer;
+        position: relative;
+        text-align: center;
+        color: #333; 
+        width: 100%;
+      }
+      @media only screen and (max-width: 768px) {
+        .roomy {
+          display: none;
+        }
+        .tight { 
+            display: block; 
+        }
+      }
+    </style>
+    <div class="roomy">Sort results by <strong>[[sort]]</strong> and show <strong>[[pageSize]]</strong> results per page.</div>
+    <div class="tight">
+        <button>Relevance</button>
+    </div>
+  </template>
+
+  <script>
+    class RHDSearchSortPage extends Polymer.Element {
+      static get is() { return 'rhd-search-sort-page'; }
+      static get properties() {
+        return {
+          sort: String,
+          pageSize: Number
+        };
+      }
+    }
+
+    window.customElements.define(RHDSearchSortPage.is, RHDSearchSortPage);
+  </script>
+</dom-module>

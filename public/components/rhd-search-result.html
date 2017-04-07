@@ -1,0 +1,51 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<dom-module id="rhd-search-result">
+  <template>
+    <style>
+        
+    </style>
+    <div class="result result-search" >
+        <h4>[[result.fields.sys_title.0]]</h4>
+        <p class="result-info">
+            <span class="caps">[[kind]]</span>
+            <span>[[created]]</span>
+        </p>
+        <p class="result-description">[[result.fields.sys_description]]</p>
+    </div>
+  </template>
+
+  <script>
+    class RHDSearchResult extends Polymer.Element {
+      static get is() { return 'rhd-search-result'; }
+      static get properties() {
+        return {
+          result: Object,
+          title: {
+              type: String,
+              computed: 'computeTitle(result)'
+          },
+          kind: {
+              type: String,
+              computed: 'computeKind(result)'
+          },
+          created: String,
+          description: String,
+        };
+      }
+      computeTitle(result) { return result.fields.sys_title[0]; }
+      computeKind(result) {
+          let kind = result.fields.sys_type || "";
+          if (result.fields.sys_url_view[0].indexOf('/events/') >= 0) {
+              kind = "Event";
+          }
+          if (result.fields.sys_url_view[0].indexOf('/video/') >= 0) {
+              kind = "Video";
+          }
+          return kind;
+       }
+    }
+
+    window.customElements.define(RHDSearchResult.is, RHDSearchResult);
+  </script>
+</dom-module>

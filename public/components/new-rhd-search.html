@@ -1,0 +1,112 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/public/components/rhd-search-query.html">
+<link rel="import" href="/public/components/rhd-search-box.html">
+<link rel="import" href="/public/components/rhd-search-result-count.html">
+<link rel="import" href="/public/components/rhd-search-filters.html">
+<link rel="import" href="/public/components/rhd-search-filter-group.html">
+<link rel="import" href="/public/components/rhd-search-filter-item.html">
+<link rel="import" href="/public/components/rhd-search-results.html">
+<link rel="import" href="/public/components/rhd-search-sort-page.html">
+<link rel="import" href="/public/components/rhd-search-active-filters.html">
+<link rel="import" href="/public/components/rhd-search-recommended.html">
+
+<dom-module id="new-rhd-search">
+  <template>
+    <style>
+      :host {
+        display: grid;
+        grid-template-columns: 1fr 3fr 6fr 2fr;
+        grid-template-rows: 40px 40px auto auto;
+        grid-column-gap: 20px;
+        grid-row-gap: 10px;
+        grid-template-areas:
+          ". searchbar searchbar ."
+          ". resultcount . ."
+          ". filters results ."
+          ". . results .";
+      }
+
+      .mobile { display: none; }
+
+      rhd-search-box {
+        grid-area: searchbar;
+      }
+
+      rhd-search-filters {
+        grid-area: filters;
+      }
+
+      rhd-search-result-count {
+        grid-area: resultcount;
+      }
+
+      rhd-search-results {
+        grid-area: results;
+      }
+
+      @media only screen and (max-width: 768px) {
+        :host {
+          grid-template-columns: 1fr 1fr;
+          grid-template-rows: auto;
+          grid-template-areas:
+            "searchbar searchbar"
+            "filters relevance"
+            "resultcount resultcount"
+            "results results";
+          padding: 0 1em;
+        }
+
+        rhd-search-sort-page {
+          grid-area: relevance;
+        }
+        .mobile { display: block; }
+        .desktop { display: none; }
+      }
+    </style>
+    <rhd-search-query results="{{results}}" term="[[term]]" limit="10"></rhd-search-query>
+    <rhd-search-box term="{{term}}"></rhd-search-box>
+    <rhd-search-result-count count="{{results.hits.total}}" term="{{term}}" class="desktop"></rhd-search-result-count>
+    <rhd-search-filters title="Filter By">
+      <rhd-search-filter-group name="PRODUCT">
+        <rhd-search-filter-item value="eap" filter="{{filter.eap}}">JBoss Enterprise Application Platform</rhd-search-filter-item>
+        <rhd-search-filter-item value="webserver">JBoss Web Server</rhd-search-filter-item>
+        <rhd-search-filter-item value="datagrid">JBoss Data Grid</rhd-search-filter-item>
+        <rhd-search-filter-item value="datavirt">JBoss Data Virtualization</rhd-search-filter-item>
+        <rhd-search-filter-item value="fuse">JBoss Fuse</rhd-search-filter-item>
+        <rhd-search-filter-item value="amq">JBoss A-MQ</rhd-search-filter-item>
+        <rhd-search-filter-item value="brms">JBoss BRMS</rhd-search-filter-item>
+        <rhd-search-filter-item value="bpmsuite">JBoss BPM Suite</rhd-search-filter-item>
+        <rhd-search-filter-item value="devstudio">JBoss Developer Studio</rhd-search-filter-item>
+        <rhd-search-filter-item value="cdk">Red Hat Container Development Kit</rhd-search-filter-item>
+        <rhd-search-filter-item value="developertoolset">Red Hat Developer Toolset</rhd-search-filter-item>
+        <rhd-search-filter-item value="rhel">Red Hat Enterprise Linux</rhd-search-filter-item>
+        <rhd-search-filter-item value="softwarecollections">Red Hat Software Collections</rhd-search-filter-item>
+        <rhd-search-filter-item value="mobileplatform">Red Hat Mobile Application Platform</rhd-search-filter-item>
+        <rhd-search-filter-item value="openshift">Red Hat OpenShift Container Platform</rhd-search-filter-item>
+      </rhd-search-filter-group>
+    </rhd-search-filters>
+    <rhd-search-sort-page sort="most recent" page-size="10" class="mobile"></rhd-search-sort-page>
+    <rhd-search-result-count count="{{results.hits.total}}" term="{{term}}" class="mobile"></rhd-search-result-count>
+    <rhd-search-results results="[[results]]" infinite>
+      <rhd-search-sort-page sort="most recent" page-size="10" class="desktop"></rhd-search-sort-page>
+      <rhd-search-active-filters filters="{{filters}}"></rhd-search-active-filters>
+      <rhd-search-recommended></rhd-search-recommended>
+    </rhd-search-results>
+  </template>
+
+  <script>
+    class RHDSearchApplication extends Polymer.Element {
+      static get is() { return 'new-rhd-search'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'new-rhd-search'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(RHDSearchApplication.is, RHDSearchApplication);
+  </script>
+</dom-module>
