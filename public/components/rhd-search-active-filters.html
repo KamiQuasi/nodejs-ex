@@ -7,7 +7,7 @@
         display: block;
       }
     </style>
-    <template is="dom-repeat" items="[[filters]]">
+    <template is="dom-repeat" items="{{list}}">
         <div>[[item]] <a href="#" onclick="return false;">X</a></div>
     </template>
   </template>
@@ -18,9 +18,24 @@
       static get properties() {
         return {
           filters: {
-            type: Array
+            type: Object,
+            notify: true
+          },
+          list: {
+            type: Array,
+            calculated: '_getFilters(filters)'
           }
         };
+      }
+
+      _getFilters(filters) {
+        let keys = Object.keys(filters);
+        let l = keys.length;
+        for( let i=0; i < l; i++) {
+          if (typeof filters[keys[i]] == 'array') {
+            this.list.push(filters[keys[i]]);
+          }
+        }
       }
     }
 

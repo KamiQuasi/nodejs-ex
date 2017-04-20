@@ -1,8 +1,15 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="/bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="/bower_components/paper-item/paper-item.html">
+
 
 <dom-module id="rhd-search-sort-page">
   <template>
     <style>
+      :host {
+        margin-bottom: 2em;
+      }
       .tight {
         display: none;
       }
@@ -29,11 +36,32 @@
         .tight { 
             display: block; 
         }
+        .clear {
+            padding: 0;
+            margin: 0; 
+            border: 1px solid white;
+            width: auto;
+            font-weight: bold;
+        }
       }
     </style>
-    <div class="roomy">Sort results by <strong>[[sort]]</strong> and show <strong>[[pageSize]]</strong> results per page.</div>
+    <div class="roomy">Sort results by 
+        <paper-dropdown-menu label="Select Sort">
+          <paper-listbox class="dropdown-content">
+              <paper-item value="relevance" selected>Relevance</paper-item>
+              <paper-item value="recent">Most Recent</paper-item>
+          </paper-listbox> 
+        </paper-dropdown-menu>
+        and show 
+        <select>
+            <option value="10" selected>10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
+        results per page.</div>
     <div class="tight">
-        <button>Relevance</button>
+        <a href="#" on-click="">Relevance</a>
     </div>
   </template>
 
@@ -42,8 +70,14 @@
       static get is() { return 'rhd-search-sort-page'; }
       static get properties() {
         return {
-          sort: String,
-          pageSize: Number
+          sort: {
+              type: String,
+              value: "Relevance"
+          },
+          pageSize: {
+              type: Number,
+              value: 10
+          }
         };
       }
     }

@@ -4,15 +4,16 @@
   <template>
     <style>
       :host {
-
+        margin: 0 2em 1em 2em;
       }
       @media only screen and (max-width: 768px) {
         :host {
           font-weight: 600;
+          margin: 0 0 1em 0;
         }
       }
     </style>
-    <template is="dom-if" if="{{count}}">
+    <template is="dom-if" if="{{term}}">
         <span>[[count]] results found for [[term]]</span>
     </template>
     

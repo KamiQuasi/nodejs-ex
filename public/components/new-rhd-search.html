@@ -14,84 +14,86 @@
   <template>
     <style>
       :host {
-        display: grid;
-        grid-template-columns: 1fr 3fr 6fr 2fr;
-        grid-template-rows: 40px 40px auto auto;
-        grid-column-gap: 20px;
-        grid-row-gap: 10px;
-        grid-template-areas:
-          ". searchbar searchbar ."
-          ". resultcount . ."
-          ". filters results ."
-          ". . results .";
+        display: flex;
+        flex-flow: column;
       }
+
+      .hide { display: none; }
+      .show { display: block; }
 
       .mobile { display: none; }
 
       rhd-search-box {
-        grid-area: searchbar;
+        
+      }
+
+      .content {
+        display: flex;
+        flex-direction: row;
       }
 
       rhd-search-filters {
-        grid-area: filters;
+        flex: 0 0 240px;
+        align-self: auto;
       }
-
-      rhd-search-result-count {
-        grid-area: resultcount;
-      }
-
+      
       rhd-search-results {
-        grid-area: results;
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
       }
 
       @media only screen and (max-width: 768px) {
-        :host {
-          grid-template-columns: 1fr 1fr;
-          grid-template-rows: auto;
-          grid-template-areas:
-            "searchbar searchbar"
-            "filters relevance"
-            "resultcount resultcount"
-            "results results";
-          padding: 0 1em;
+        .content {
+          flex-direction: column;
+          position: relative;
         }
 
-        rhd-search-sort-page {
-          grid-area: relevance;
-        }
+        rhd-search-filters { flex: none; align-self: flex-start; float: left; }
+        rhd-search-sort-page { align-self: flex-end; position: absolute; top: 0;}
+        rhd-search-results { flex: auto; }
         .mobile { display: block; }
         .desktop { display: none; }
       }
     </style>
-    <rhd-search-query results="{{results}}" term="[[term]]" limit="10"></rhd-search-query>
-    <rhd-search-box term="{{term}}"></rhd-search-box>
-    <rhd-search-result-count count="{{results.hits.total}}" term="{{term}}" class="desktop"></rhd-search-result-count>
-    <rhd-search-filters title="Filter By">
-      <rhd-search-filter-group name="PRODUCT">
-        <rhd-search-filter-item value="eap" filter="{{filter.eap}}">JBoss Enterprise Application Platform</rhd-search-filter-item>
-        <rhd-search-filter-item value="webserver">JBoss Web Server</rhd-search-filter-item>
-        <rhd-search-filter-item value="datagrid">JBoss Data Grid</rhd-search-filter-item>
-        <rhd-search-filter-item value="datavirt">JBoss Data Virtualization</rhd-search-filter-item>
-        <rhd-search-filter-item value="fuse">JBoss Fuse</rhd-search-filter-item>
-        <rhd-search-filter-item value="amq">JBoss A-MQ</rhd-search-filter-item>
-        <rhd-search-filter-item value="brms">JBoss BRMS</rhd-search-filter-item>
-        <rhd-search-filter-item value="bpmsuite">JBoss BPM Suite</rhd-search-filter-item>
-        <rhd-search-filter-item value="devstudio">JBoss Developer Studio</rhd-search-filter-item>
-        <rhd-search-filter-item value="cdk">Red Hat Container Development Kit</rhd-search-filter-item>
-        <rhd-search-filter-item value="developertoolset">Red Hat Developer Toolset</rhd-search-filter-item>
-        <rhd-search-filter-item value="rhel">Red Hat Enterprise Linux</rhd-search-filter-item>
-        <rhd-search-filter-item value="softwarecollections">Red Hat Software Collections</rhd-search-filter-item>
-        <rhd-search-filter-item value="mobileplatform">Red Hat Mobile Application Platform</rhd-search-filter-item>
-        <rhd-search-filter-item value="openshift">Red Hat OpenShift Container Platform</rhd-search-filter-item>
-      </rhd-search-filter-group>
-    </rhd-search-filters>
-    <rhd-search-sort-page sort="most recent" page-size="10" class="mobile"></rhd-search-sort-page>
-    <rhd-search-result-count count="{{results.hits.total}}" term="{{term}}" class="mobile"></rhd-search-result-count>
-    <rhd-search-results results="[[results]]" infinite>
-      <rhd-search-sort-page sort="most recent" page-size="10" class="desktop"></rhd-search-sort-page>
-      <rhd-search-active-filters filters="{{filters}}"></rhd-search-active-filters>
-      <rhd-search-recommended></rhd-search-recommended>
-    </rhd-search-results>
+    <rhd-search-query results="{{results}}" filters="[[filters]]" limit="10"></rhd-search-query>
+    <rhd-search-box term="{{filters.term}}"></rhd-search-box>
+    <rhd-search-result-count count="{{results.hits.total}}" term="{{filters.term}}" class="desktop"></rhd-search-result-count>
+    <div class="content">
+      <rhd-search-filters title="Filter By" filters="{{filters}}">
+        <rhd-search-filter-group name="CONTENT TYPE">
+        </rhd-search-filter-group>
+        <rhd-search-filter-group name="PRODUCT">
+          <rhd-search-filter-item value="eap" name="JBoss Enterprise Application Platform" filter="{{filters.target_product.0}}"></rhd-search-filter-item>
+          <rhd-search-filter-item value="webserver" name="JBoss Web Server" filter="{{filters.target_product.1}}"></rhd-search-filter-item>
+          <rhd-search-filter-item value="datagrid" name="JBoss Data Grid" filter="{{filters.target_product.2}}"></rhd-search-filter-item>
+          <rhd-search-filter-item value="datavirt" name="JBoss Data Virtualization"></rhd-search-filter-item>
+          <rhd-search-filter-item value="fuse" name="JBoss Fuse"></rhd-search-filter-item>
+          <a href="#" onclick="return false;">Show More...</a>
+          <div class="hide">
+          <rhd-search-filter-item value="amq" name="JBoss A-MQ"></rhd-search-filter-item>
+          <rhd-search-filter-item value="brms" name="JBoss BRMS"></rhd-search-filter-item>
+          <rhd-search-filter-item value="bpmsuite" name="JBoss BPM Suite"></rhd-search-filter-item>
+          <rhd-search-filter-item value="devstudio" name="JBoss Developer Studio"></rhd-search-filter-item>
+          <rhd-search-filter-item value="cdk" name="Red Hat Container Development Kit"></rhd-search-filter-item>
+          <rhd-search-filter-item value="developertoolset" name="Red Hat Developer Toolset"></rhd-search-filter-item>
+          <rhd-search-filter-item value="rhel" name="Red Hat Enterprise Linux"></rhd-search-filter-item>
+          <rhd-search-filter-item value="softwarecollections" name="Red Hat Software Collections"></rhd-search-filter-item>
+          <rhd-search-filter-item value="mobileplatform" name="Red Hat Mobile Application Platform"></rhd-search-filter-item>
+          <rhd-search-filter-item value="openshift" name="Red Hat OpenShift Container Platform"></rhd-search-filter-item>
+          </div>
+        </rhd-search-filter-group>
+        <rhd-search-filter-group name="TOPIC">
+        </rhd-search-filter-group>
+      </rhd-search-filters>
+      <rhd-search-results results="[[results]]" infinite>
+        <rhd-search-sort-page sort="most recent" page-size="10" class="mobile"></rhd-search-sort-page>
+        <rhd-search-result-count count="{{results.hits.total}}" term="{{filters.term}}" class="mobile"></rhd-search-result-count>
+        <rhd-search-sort-page sort="most recent" page-size="10" class="desktop"></rhd-search-sort-page>
+        <rhd-search-active-filters filters="{{filters}}"></rhd-search-active-filters>
+        <rhd-search-recommended></rhd-search-recommended>
+      </rhd-search-results>
+    </div>
   </template>
 
   <script>
@@ -99,9 +101,9 @@
       static get is() { return 'new-rhd-search'; }
       static get properties() {
         return {
-          prop1: {
-            type: String,
-            value: 'new-rhd-search'
+          filters: {
+            type: Object,
+            value: {term:'', target_product: []}
           }
         };
       }

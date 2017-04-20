@@ -5,6 +5,7 @@
     <style>
       :host {
         font-family: Overpass, "Open Sans", Helvetica;
+        margin: 0 2em .5em 2em;
       }
       form.search-bar { 
         box-sizing: border-box;
@@ -59,17 +60,23 @@
         color: #fff;
       }
       @media only screen and (max-width: 768px) {
+        
+      }
+      @media only screen and (max-width: 500px) {
         form.search-bar {
-          grid-template-columns: auto;
-          grid-template-rows: 40px 40px;
-          grid-gap: .5em;
-          margin-bottom: 1em;
+          grid-template-columns: auto 48px;
         }
+        button {
+          padding: 9px;
+        }
+      }
+      @media only screen and (max-width: 320px) {
+        
       }
     </style>
     <form class="search-bar" role="search" onsubmit="return false;">
-      <div class="input-cont"><input class="user-success user-search" type="search" placeholder="Enter your search term" id="search_list_text" value="{{term::input}}"></div>
-      <button>SEARCH</button>
+      <div class="input-cont"><input class="user-success user-search" type="search" id="query" placeholder="Enter your search term" id="search_list_text" value="{{text::input}}"></div>
+      <button on-click="_handleChange" id="">SEARCH</button>
     </form>
     <slot></slot>
   </template>
@@ -82,8 +89,17 @@
           term: {
             type: String,
             notify: true
-          }
+          },
+          text: String
         };
+      }
+      ready() {
+        super.ready();
+        this.addEventListener('keyup', e => { if(e.key == 'Enter') { this._handleChange(e) } });
+      }
+
+      _handleChange() {
+          this.term = this.text;
       }
     }
 

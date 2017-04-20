@@ -1,13 +1,16 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
+<script src="/bower_components/stickybits/dist/stickybits.min.js"></script>
 
 <dom-module id="rhd-search-filters">
   <template>
     <style>
       :host {
         display: block;
-        border: 2px solid #666;
+        margin: 0 2em;
       }
-      h2 { background: #666; color: white; margin: 0;}
+      .control { border: 2px solid #666; }
+      h2 { background: #666; color: white; margin: 0; }
+      .cancel { display: none; }
       .showBtn { 
         display: none;
         background: #ccc;
@@ -25,30 +28,93 @@
         color: #333; 
         width: 100%;
         }
+      
+      #footer { display: none; }
 
       @media only screen and (max-width: 768px) {
         :host {
           display: inline-block;
           border: none;
+          margin: 0 0 1em 0;
         }
-        .showBtn { display: block; }
-        .control { display: none; }
+        h2 { flex: 0 0 40px; order: 1; vertical-align: middle; }
+        .showBtn { display: block;
+            width: 150px;
+            padding: 9px 25px;
+            margin-left: 2em;
+            height: auto;
+          }
+        .control {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          height: 100%;
+          padding-top: 51px;
+          background: rgba(0,0,0,.5);
+          border: none;
+          z-index: 1;
+          transform: translate(-100%, -60px);
+          transition: .5s ease-in-out;
+          position: absolute;
+          top: 0;
+         }
+        .cancel { display: block; float: right; color: white; background: #999; border: 1px solid white;
+          font-size: 16px;
+          padding: 7px;
+          margin: 3px 3px 0 0;
+        } 
+        .modal {
+          transform: translate(0, -60px); 
+        }
+        .groups {
+          background: white;
+          flex: 1 0 100%; 
+          order: 1;
+        }
+        #footer { display: block; flex: 0 0 auto; height: 40px; order: 2; }
       }
+
     </style>
-    <button class="showBtn">Show Filters</button>
-    <div class="control">
-      <h2>[[title]]</h2>
-      <slot></slot>
+    <a class="showBtn" on-click="showModal">Show Filters</a>
+    <div class="control" id="control">
+      <h2>[[title]] <a href="#" class="cancel" id="cancel" on-click="showModal">Cancel</a></h2>
+      <div class="groups"><slot></slot></div>
+      <div id="footer"><a href="#" on-click="clearOptions">Clear All</a> | <a href="#" on-click="showModal">Apply</a></div>
     </div>
   </template>
 
   <script>
     class RHDSearchFilters extends Polymer.Element {
       static get is() { return 'rhd-search-filters'; }
+      connectedCallback() {
+        super.connectedCallback();
+        stickybits(this.$.footer, { verticalPosition: 'bottom' });
+      }
       static get properties() {
         return {
-          title: String
+          title: String,
+          filters: {
+            type: Object,
+            notify: true
+          },
+          toggle: {
+            type: Boolean,
+            value: true
+          }
         };
+      }
+      showModal(e) {
+        this.$.control.className = this.toggle ? 'control modal' : 'control';
+        this.toggle = this.toggle ? false : true;
+        return false;
+      }
+      clearOptions() {
+        let items = this.getElementsByTagName('rhd-search-filter-item');
+        let l = items.length;
+        for(let i=0; i < l; i++) {
+          items[i].set('toggle', false);
+        }
+        return false;
       }
     }
 

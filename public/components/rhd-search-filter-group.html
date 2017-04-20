@@ -1,14 +1,33 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/iron-icons/iron-icons.html">
 
 <dom-module id="rhd-search-filter-group">
   <template>
     <style>
       :host {
         display: block;
+        padding: .5em;
+        position: relative;
       }
+      h4 {
+        font-weight: bold;
+        text-transform: uppercase;
+        margin: .5em 0;
+      }
+      #toggle { float: right;}
+      .filters {
+        font-size: .85em;
+      }
+      .hide { display: none; }
+      .show { display: block; }
+
+       @media only screen and (max-width: 768px) {
+       }
     </style>
-    <span>[[name]]</span>
+    <h4 id="heading" on-click="showFilters">[[name]] <iron-icon id="toggle" icon="icons:chevron-right"></iron-icon></h4>
+    <div id="filters" class="filters hide">
     <slot></slot>
+    </div>
   </template>
 
   <script>
@@ -19,8 +38,18 @@
           name: {
             type: String,
             value: 'rhd-search-filter-group'
+          },
+          toggle: {
+            type: Boolean,
+            value: false
           }
         };
+      }
+
+      showFilters() {
+        this.toggle = !this.toggle;
+        this.$.filters.className = this.toggle ? "filters show" : "filters hide";
+        this.$.toggle.icon = this.toggle ? 'icons:expand-more' : 'icons:chevron-right';
       }
     }
 

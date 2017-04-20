@@ -3,7 +3,39 @@
 <dom-module id="rhd-search-result">
   <template>
     <style>
-        
+        :host {
+            font-family: "Overpass","Open Sans",Helvetica,sans-serif;
+        }
+        h4 {
+            font-weight: 600;
+            font-style: normal;
+            font-size: 18px;
+            line-height: 1.4;
+            color: #06c;
+            cursor: pointer;
+            margin: 0;
+            font-family: "Overpass","Open Sans",Helvetica,sans-serif;
+        }
+
+        p { margin: 0; 
+            color: #424242;
+            font-family: "Overpass","Open Sans",Helvetica,sans-serif; 
+            }
+
+        .caps {
+            text-transform: uppercase;
+            font-size: 16px;
+            font-weight: normal;
+            line-height: 24px;
+            -webkit-font-smoothing: antialiased;
+        }
+        .result-description {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-height: 45px;
+            margin-bottom: 50px;
+        }
+
     </style>
     <div class="result result-search" >
         <h4>[[result.fields.sys_title.0]]</h4>
@@ -29,7 +61,10 @@
               type: String,
               computed: 'computeKind(result)'
           },
-          created: String,
+          created: {
+              type: String,
+              computed: 'computeCreated(result)'
+          },
           description: String,
         };
       }
@@ -43,6 +78,11 @@
               kind = "Video";
           }
           return kind;
+       }
+       computeCreated(result) {
+          let options = { month: 'long', day: 'numeric', year: 'numeric' }
+          let created = result.fields.sys_created ? '| ' + new Intl.DateTimeFormat('en-US', options).format(new Date(result.fields.sys_created)) : "";
+          return created;
        }
     }
 

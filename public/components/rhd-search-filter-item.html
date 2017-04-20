@@ -1,13 +1,42 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="/bower_components/paper-checkbox/paper-checkbox.html">
 
 <dom-module id="rhd-search-filter-item">
   <template>
     <style>
       :host {
-        display: block;
+        display: flex;
+        flex-direction: row;
+        padding: .5em;
+        clear: left;
+        font-size: 16px;
+        height: 24px;
       }
+      .text {
+        flex: 1 6 auto;
+      }
+      paper-toggle-button.green {
+       flex: 0 6 40px;
+        --paper-toggle-button-checked-bar-color:  var(--paper-light-green-a400);
+        --paper-toggle-button-checked-button-color:  var(--paper-light-green-a400);
+        --paper-toggle-button-checked-ink-color: var(--paper-light-green-a400);
+        --paper-toggle-button-unchecked-bar-color:  var(--dark-theme-secondary-color);
+        --paper-toggle-button-unchecked-button-color:  var(--dark-theme-secondary-color);
+        --paper-toggle-button-unchecked-ink-color: var(--dark-theme-secondary-color);
+        float: right;
+      }
+
+      #toggle { display: none; }
+
+      @media only screen and (max-width: 768px) {
+        #check { display: none; }
+        #toggle { display: block; }
+       }
     </style>
-    <label><input type="checkbox" value="{{value}}"> [[value]]</label>
+    <div class="text" on-click="setToggle">[[name]]</div>
+    <paper-checkbox noink id="check" checked="{{toggle}}" value="{{value}}"></paper-checkbox>
+    <paper-toggle-button id="toggle" class="green" noink checked="{{toggle}}" value="{{value}}"></paper-toggle-button>
   </template>
 
   <script>
@@ -15,11 +44,29 @@
       static get is() { return 'rhd-search-filter-item'; }
       static get properties() {
         return {
+          name: String,
+          toggle: {
+            type: Boolean,
+            value: null,
+            notify: true
+          },
           value: {
             type: String,
             value: 'rhd-search-filter-item'
+          },
+          filter: {
+            type: String,
+            notify: true,
+            computed: 'getFilter(toggle, value)'
           }
         };
+      }
+
+      getFilter(toggle, val) {
+        return toggle ? {value: val, name: this.name} : null;
+      }
+      setToggle() {
+        this.toggle = !this.toggle;
       }
     }
 
