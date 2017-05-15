@@ -1,4 +1,5 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/public/components/rhd-search-filter-group.html">
 <script src="/bower_components/stickybits/dist/stickybits.min.js"></script>
 
 <dom-module id="rhd-search-filters">
@@ -6,7 +7,7 @@
     <style>
       :host {
         display: block;
-        margin: 0 2em;
+        margin-right: 2em;
       }
       .control { border: 2px solid #666; }
       h2 { background: #666; color: white; margin: 0; }
@@ -31,6 +32,7 @@
       
       #footer { display: none; }
 
+
       @media only screen and (max-width: 768px) {
         :host {
           display: inline-block;
@@ -53,32 +55,42 @@
           background: rgba(0,0,0,.5);
           border: none;
           z-index: 1;
-          transform: translate(-100%, -60px);
-          transition: .5s ease-in-out;
+          right: 100%;
           position: absolute;
-          top: 0;
+          top: -60px;
          }
-        .cancel { display: block; float: right; color: white; background: #999; border: 1px solid white;
+        .cancel { 
+          display: block; 
+          float: right; 
+          color: white; 
+          background: #999; 
+          border: 1px solid white;
           font-size: 16px;
           padding: 7px;
           margin: 3px 3px 0 0;
         } 
         .modal {
-          transform: translate(0, -60px); 
+          transition: .5s ease-in-out;
+          transform: translateX(100%); 
         }
         .groups {
           background: white;
           flex: 1 0 100%; 
           order: 1;
+          overflow: auto;
         }
-        #footer { display: block; flex: 0 0 auto; height: 40px; order: 2; }
+        #footer { display: block; flex: 0 1 auto; height: 40px; order: 2; }
       }
 
     </style>
     <a class="showBtn" on-click="showModal">Show Filters</a>
     <div class="control" id="control">
       <h2>[[title]] <a href="#" class="cancel" id="cancel" on-click="showModal">Cancel</a></h2>
-      <div class="groups"><slot></slot></div>
+      <div class="groups">
+        <template is="dom-repeat" items="{{filters.facets}}">
+          <rhd-search-filter-group id="{{item.key}}" name="{{item.name}}" items="{{item.items}}"></rhd-search-filter-group>
+        </template>
+      </div>
       <div id="footer"><a href="#" on-click="clearOptions">Clear All</a> | <a href="#" on-click="showModal">Apply</a></div>
     </div>
   </template>
@@ -95,7 +107,35 @@
           title: String,
           filters: {
             type: Object,
-            notify: true
+            notify: true,
+            value: {
+              term:'', 
+              facets: [
+                { name: 'CONTENT TYPE', key: 'content_type', items: [] },
+                {
+                  name:'PRODUCT', 
+                  key: 'target_product', 
+                  items: [
+                    {name: 'JBoss Enterprise Application Platform', value: 'eap'},
+                    {name: 'JBoss Web Server', value: 'webserver'},
+                    {name: 'JBoss Data Grid', value: 'datagrid'},
+                    {name: 'JBoss Data Virtualization', value: 'datavirt'},
+                    {name: 'JBoss Fuse', value: 'fuse'},
+                    {name: 'JBoss A-MQ', value: 'amq'},
+                    {name: 'JBoss BRMS', value: 'brms'},
+                    {name: 'JBoss BPM Suite', value: 'bpmsuite'},
+                    {name: 'JBoss Developer Studio', value: 'devstudio'},
+                    {name: 'Red Hat Container Development Kit', value: 'cdk'},
+                    {name: 'Red Hat Developer Toolset', value: 'developertoolset'},
+                    {name: 'Red Hat Enterprise Linux', value: 'rhel'},
+                    {name: 'Red Hat Software Collections', value: 'softwarecollections'},
+                    {name: 'Red Hat Mobile Application Platform', value: 'mobileplatform'},
+                    {name: 'Red Hat OpenShift Container Platform', value: 'openshift'}
+                  ]
+                },
+                { name: 'TOPIC', key: 'topic', items: [] }
+              ]
+            }
           },
           toggle: {
             type: Boolean,
@@ -109,12 +149,12 @@
         return false;
       }
       clearOptions() {
-        let items = this.getElementsByTagName('rhd-search-filter-item');
-        let l = items.length;
-        for(let i=0; i < l; i++) {
-          items[i].set('toggle', false);
-        }
+        let groups = this.getElementsByTagName('rhd-search-filter-group');;
+        console.log(groups);
         return false;
+      }
+      _setItems(e) {
+        console.log(e);
       }
     }
 

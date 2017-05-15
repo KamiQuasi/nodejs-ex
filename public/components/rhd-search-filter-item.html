@@ -34,9 +34,9 @@
         #toggle { display: block; }
        }
     </style>
+    <paper-checkbox noink id="check" on-change="setToggle" checked="{{toggle}}"></paper-checkbox>
     <div class="text" on-click="setToggle">[[name]]</div>
-    <paper-checkbox noink id="check" checked="{{toggle}}" value="{{value}}"></paper-checkbox>
-    <paper-toggle-button id="toggle" class="green" noink checked="{{toggle}}" value="{{value}}"></paper-toggle-button>
+    <paper-toggle-button id="toggle" class="green" noink on-change="setToggle" checked="{{toggle}}"></paper-toggle-button>
   </template>
 
   <script>
@@ -47,26 +47,22 @@
           name: String,
           toggle: {
             type: Boolean,
-            value: null,
+            value: false,
             notify: true
           },
           value: {
             type: String,
             value: 'rhd-search-filter-item'
-          },
-          filter: {
-            type: String,
-            notify: true,
-            computed: 'getFilter(toggle, value)'
           }
         };
       }
 
-      getFilter(toggle, val) {
-        return toggle ? {value: val, name: this.name} : null;
-      }
       setToggle() {
-        this.toggle = !this.toggle;
+        this.set('toggle', !this.toggle);
+      }
+
+      clear() {
+        this.set('toggle', false);
       }
     }
 

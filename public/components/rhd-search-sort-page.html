@@ -1,8 +1,5 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
 <link rel="import" href="/bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="/bower_components/paper-listbox/paper-listbox.html">
-<link rel="import" href="/bower_components/paper-item/paper-item.html">
-
 
 <dom-module id="rhd-search-sort-page">
   <template>
@@ -13,14 +10,13 @@
       .tight {
         display: none;
       }
-      .tight button {
-          background: #ccc;
+      .tight .button {
+        background: #ccc;
         text-decoration: none;
         border: 0;
-        height: 40px;
         font-weight: 600;
         font-size: 16px;
-        padding: 9px 40px;
+        padding: 9px 25px;
         transition: background .2s ease-in 0s;
         line-height: 1.2em;
         cursor: pointer;
@@ -28,6 +24,9 @@
         text-align: center;
         color: #333; 
         width: 100%;
+        display: block;
+        width: 150px;
+        margin-right: 2em;
       }
       @media only screen and (max-width: 768px) {
         .roomy {
@@ -46,12 +45,10 @@
       }
     </style>
     <div class="roomy">Sort results by 
-        <paper-dropdown-menu label="Select Sort">
-          <paper-listbox class="dropdown-content">
-              <paper-item value="relevance" selected>Relevance</paper-item>
-              <paper-item value="recent">Most Recent</paper-item>
-          </paper-listbox> 
-        </paper-dropdown-menu>
+        <select>
+            <option value="relevance" selected>Relevance</option>
+            <option value="recent">Most Recent</option>
+        </select> 
         and show 
         <select>
             <option value="10" selected>10</option>
@@ -61,7 +58,7 @@
         </select>
         results per page.</div>
     <div class="tight">
-        <a href="#" on-click="">Relevance</a>
+        <a href="#" class="button" on-click="">Relevance</a>
     </div>
   </template>
 

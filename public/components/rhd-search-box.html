@@ -93,6 +93,11 @@
           text: String
         };
       }
+      connectedCallback() {
+        var loc = window.location.href.split('?');
+        this.set('text',loc.length > 1 ? loc.split('=')[1] : '');
+        this._handleChange();
+      }
       ready() {
         super.ready();
         this.addEventListener('keyup', e => { if(e.key == 'Enter') { this._handleChange(e) } });

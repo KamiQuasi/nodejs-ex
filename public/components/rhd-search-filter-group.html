@@ -1,5 +1,6 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
 <link rel="import" href="/bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="/public/components/rhd-search-filter-item.html">
 
 <dom-module id="rhd-search-filter-group">
   <template>
@@ -7,6 +8,7 @@
       :host {
         display: block;
         padding: .5em;
+        margin: 0 .5em;
         position: relative;
       }
       h4 {
@@ -26,7 +28,9 @@
     </style>
     <h4 id="heading" on-click="showFilters">[[name]] <iron-icon id="toggle" icon="icons:chevron-right"></iron-icon></h4>
     <div id="filters" class="filters hide">
-    <slot></slot>
+      <template is="dom-repeat" items="{{items}}">
+        <rhd-search-filter-item value="{{item.value}}" name="[[item.name]]" toggle="{{item.toggle}}"></rhd-search-filter-item>
+      </template>
     </div>
   </template>
 
@@ -35,13 +39,21 @@
       static get is() { return 'rhd-search-filter-group'; }
       static get properties() {
         return {
+          key: {
+            type: String,
+            notify: true
+          },
           name: {
             type: String,
-            value: 'rhd-search-filter-group'
+            notify: true
           },
           toggle: {
             type: Boolean,
             value: false
+          },
+          items: {
+            type: Array,
+            notify: true
           }
         };
       }

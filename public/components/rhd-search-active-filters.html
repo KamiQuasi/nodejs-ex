@@ -4,12 +4,26 @@
   <template>
     <style>
       :host {
-        display: block;
+        display: flex;
+        flex-direction: row;
+      }
+      strong { flex: 0 1 auto; order: 1; }
+      ul { flex: 1 1 auto; order: 2; list-style: none; }
+      a { flex: 0 1 auto; order: 3; }
+      @media only screen and (max-width: 768px) {
+        :host {
+          margin-right: 2em;
+        }
       }
     </style>
+    [[filters.target_product.0.name]]
+    <strong>Active Filters:</strong>
+    <ul>
     <template is="dom-repeat" items="{{list}}">
-        <div>[[item]] <a href="#" onclick="return false;">X</a></div>
+        <li>[[item.name]] <a href="#" onclick="return false;">X</a></li>
     </template>
+    </ul>
+    <a href="#" on-click="clearFilters">Clear All Filters</a>
   </template>
 
   <script>
@@ -17,25 +31,42 @@
       static get is() { return 'rhd-search-active-filters'; }
       static get properties() {
         return {
-          filters: {
+          facets: {
             type: Object,
             notify: true
           },
           list: {
             type: Array,
-            calculated: '_getFilters(filters)'
+            calculated: '_getFilters(facets)',
+            value: []
           }
         };
       }
 
-      _getFilters(filters) {
-        let keys = Object.keys(filters);
-        let l = keys.length;
+      static get observers() {
+        return [
+            '_getFilters(facets)'
+        ]
+      }
+
+      _getFilters(facets) {
+        console.log(facets);
+        let l = facets.length;
+        this.list = [];
         for( let i=0; i < l; i++) {
-          if (typeof filters[keys[i]] == 'array') {
-            this.list.push(filters[keys[i]]);
+          if (facets[i].items) {
+            let k = facets[i].items.length;
+            for( let j=0; j < k; j++) {
+              if(facets[i].items[j].toggle) {
+                this.list.push(facets[i].items[j].name);
+              }
+            }
           }
         }
+      }
+
+      clearFilters() {
+        return false;
       }
     }
 
