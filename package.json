@@ -30,13 +30,5 @@
   "bugs": {
     "url": "http://github.com/openshift/nodejs-ex/issues"
   },
-  "homepage": "http://github.com/openshift/nodejs-ex",
-  "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-karma": "0.0.5",
-    "jasmine-core": "^2.6.1",
-    "karma": "^1.7.0",
-    "karma-chrome-launcher": "^2.1.1",
-    "karma-jasmine": "^1.1.0"
-  }
+  "homepage": "http://github.com/openshift/nodejs-ex"
 }
