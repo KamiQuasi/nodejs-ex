@@ -54,14 +54,35 @@
           items: {
             type: Array,
             notify: true
+          },
+          facets: {
+            type: Array,
+            value: [],
+            notify: true
           }
         };
       }
-
+      ready() {
+        super.ready();
+        this.addEventListener('facetChange', e => this._setFacetItems(e));
+      }
       showFilters() {
         this.toggle = !this.toggle;
         this.$.filters.className = this.toggle ? "filters show" : "filters hide";
         this.$.toggle.icon = this.toggle ? 'icons:expand-more' : 'icons:chevron-right';
+      }
+      _setFacetItems(e) {
+        if(e.detail && e.detail.facet) {
+          console.log(e.detail.facet);
+          let idx = this.facets.indexOf(e.detail.facet);
+          if( idx < 0) {
+            this.push('facets',e.detail.facet);
+          } else {
+            this.splice('facets',idx,1);
+          }
+          // console.log(this.filters);
+          this.dispatchEvent(new CustomEvent('facetsGroupChange', {detail: {key: this.get('key'), facets: this.facets}, composed: true}));
+        }
       }
     }
 

@@ -59,6 +59,7 @@
 
       setToggle() {
         this.set('toggle', !this.toggle);
+        this.dispatchEvent(new CustomEvent('facetChange', {detail: {facet: this.value}, composed: true}));
       }
 
       clear() {

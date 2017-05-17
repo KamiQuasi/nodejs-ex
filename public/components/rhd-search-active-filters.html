@@ -9,6 +9,7 @@
       }
       strong { flex: 0 1 auto; order: 1; }
       ul { flex: 1 1 auto; order: 2; list-style: none; }
+      li { float: left; margin-left: 1.5em; }
       a { flex: 0 1 auto; order: 3; }
       @media only screen and (max-width: 768px) {
         :host {
@@ -19,8 +20,12 @@
     [[filters.target_product.0.name]]
     <strong>Active Filters:</strong>
     <ul>
-    <template is="dom-repeat" items="{{list}}">
-        <li>[[item.name]] <a href="#" onclick="return false;">X</a></li>
+    <template is="dom-repeat" items="{{facets}}">
+      <template is="dom-repeat" items="{{item.items}}">
+        <template is="dom-if" if="{{item.active}}">
+          <li>[[item.name]] <a href="#" on-click="_clear([[item.value]])">X</a></li>
+        </template>
+      </template>
     </template>
     </ul>
     <a href="#" on-click="clearFilters">Clear All Filters</a>
@@ -32,13 +37,8 @@
       static get properties() {
         return {
           facets: {
-            type: Object,
-            notify: true
-          },
-          list: {
             type: Array,
-            calculated: '_getFilters(facets)',
-            value: []
+            notify: true
           }
         };
       }
@@ -49,16 +49,14 @@
         ]
       }
 
-      _getFilters(facets) {
-        console.log(facets);
-        let l = facets.length;
-        this.list = [];
+      _clear(val) {
+        let l = this.facets.length;
         for( let i=0; i < l; i++) {
-          if (facets[i].items) {
-            let k = facets[i].items.length;
+          if (this.facets[i].items) {
+            let k = this.facets[i].items.length;
             for( let j=0; j < k; j++) {
-              if(facets[i].items[j].toggle) {
-                this.list.push(facets[i].items[j].name);
+              if(this.facets[i].items[j].value == val) {
+                this.set('facets.'+i+'.items.'+j+'.active', false);
               }
             }
           }
