@@ -76,10 +76,6 @@
         <rhd-search-result-count count="{{results.hits.total}}" term="{{filters.term}}" class="mobile"></rhd-search-result-count>
         <rhd-search-active-filters facets="{{filters.facets}}"></rhd-search-active-filters>
         <rhd-search-recommended></rhd-search-recommended>
-        <template is="dom-repeat" items="{{filters.facets.1.items}}">
-          <p>[[item.name]] [[item.active]]</p>
-        </template>
-      </rhd-search-results>
     </div>
     
   </template>
