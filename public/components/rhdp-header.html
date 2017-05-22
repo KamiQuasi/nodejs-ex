@@ -1,6 +1,6 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
 
-<dom-module id="rhd-header">
+<dom-module id="rhdp-header">
   <template>
       <style>
           :host {
@@ -177,18 +177,18 @@
       </header>
     </template>
     <script>
-    class RHDHeader extends Polymer.Element {
-      static get is() { return 'rhd-header'; }
+    class RHDPHeader extends Polymer.Element {
+      static get is() { return 'rhdp-header'; }
       static get properties() {
         return {
           prop1: {
             type: String,
-            value: 'rhd-header'
+            value: 'rhdp-header'
           }
         };
       }
     }
 
-    window.customElements.define(RHDHeader.is, RHDHeader);
+    window.customElements.define(RHDPHeader.is, RHDPHeader);
   </script>
 </dom-module>

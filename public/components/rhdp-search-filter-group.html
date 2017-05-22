@@ -1,8 +1,8 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
 <link rel="import" href="/bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="/public/components/rhd-search-filter-item.html">
+<link rel="import" href="/public/components/rhdp-search-filter-item.html">
 
-<dom-module id="rhd-search-filter-group">
+<dom-module id="rhdp-search-filter-group">
   <template>
     <style>
       :host {
@@ -29,14 +29,14 @@
     <h4 id="heading" on-click="showFilters">[[name]] <iron-icon id="toggle" icon="icons:chevron-right"></iron-icon></h4>
     <div id="filters" class="filters hide">
       <template is="dom-repeat" items="{{items}}">
-        <rhd-search-filter-item value="{{item.value}}" name="[[item.name]]" toggle="{{item.toggle}}"></rhd-search-filter-item>
+        <rhdp-search-filter-item value="{{item.value}}" name="[[item.name]]" toggle="{{item.toggle}}"></rhdp-search-filter-item>
       </template>
     </div>
   </template>
 
   <script>
-    class RHDSearchFilterGroup extends Polymer.Element {
-      static get is() { return 'rhd-search-filter-group'; }
+    class RHDPSearchFilterGroup extends Polymer.Element {
+      static get is() { return 'rhdp-search-filter-group'; }
       static get properties() {
         return {
           key: {
@@ -74,7 +74,7 @@
       _setFacetItems(e) {
         if(e.detail && e.detail.facet) {
           console.log(e.detail.facet);
-          let idx = this.facets.indexOf(e.detail.facet);
+          var idx = this.facets.indexOf(e.detail.facet);
           if( idx < 0) {
             this.push('facets',e.detail.facet);
           } else {
@@ -86,6 +86,6 @@
       }
     }
 
-    window.customElements.define(RHDSearchFilterGroup.is, RHDSearchFilterGroup);
+    window.customElements.define(RHDPSearchFilterGroup.is, RHDPSearchFilterGroup);
   </script>
 </dom-module>

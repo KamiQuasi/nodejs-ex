@@ -1,7 +1,7 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
 <link rel="import" href="/bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 
-<dom-module id="rhd-search-sort-page">
+<dom-module id="rhdp-search-sort-page">
   <template>
     <style>
       :host {
@@ -63,8 +63,8 @@
   </template>
 
   <script>
-    class RHDSearchSortPage extends Polymer.Element {
-      static get is() { return 'rhd-search-sort-page'; }
+    class RHDPSearchSortPage extends Polymer.Element {
+      static get is() { return 'rhdp-search-sort-page'; }
       static get properties() {
         return {
           sort: {
@@ -79,6 +79,6 @@
       }
     }
 
-    window.customElements.define(RHDSearchSortPage.is, RHDSearchSortPage);
+    window.customElements.define(RHDPSearchSortPage.is, RHDPSearchSortPage);
   </script>
 </dom-module>

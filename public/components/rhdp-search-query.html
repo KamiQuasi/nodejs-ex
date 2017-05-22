@@ -1,6 +1,6 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
 <link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
-<dom-module id="rhd-search-query">
+<dom-module id="rhdp-search-query">
   <template>
     <iron-ajax auto id="ajax" url="/search" 
     params='{"part":"snippet", "q":"{{filters.term}}"}'
@@ -9,8 +9,8 @@
   </template>
 
   <script>
-    class RHDSearchQuery extends Polymer.Element {
-      static get is() { return 'rhd-search-query'; }
+    class RHDPSearchQuery extends Polymer.Element {
+      static get is() { return 'rhdp-search-query'; }
       static get properties() {
         return {
           term: String,
@@ -19,7 +19,8 @@
               type: Object,
               notify: true
           },
-          limit: Number
+          limit: Number,
+          sort: String
         };
       }
 
@@ -33,12 +34,12 @@
         this.$.ajax.generateRequest();
       }
       adjustResults(results) {
-        let qr = results.detail.response;
-        let hits = qr ? qr.hits.hits : [];
-        let f = [];
-        let l = hits.length;
+        var qr = results.detail.response;
+        var hits = qr ? qr.hits.hits : [];
+        var f = [];
+        var l = hits.length;
         if(this.filters.term && this.filters.term.length > 0) {
-          for(let i=0; i<l; i++) {
+          for(var i=0; i<l; i++) {
             if(this.checkFilters(hits[i].fields, this.filters)) {
               f.push(hits[i]);
             }
@@ -52,11 +53,11 @@
       }
 
       checkFilters(fields, filters) {
-        let includes = false;
-        let keys = filters ? Object.keys(filters) : {};
-        let l = keys.length;
+        var includes = false;
+        var keys = filters ? Object.keys(filters) : {};
+        var l = keys.length;
         if(fields) {
-          for(let i=0; i<l; i++) {
+          for(var i=0; i<l; i++) {
             switch (typeof filters[keys[i]]) {
               case 'object':
                 if (fields[keys[i]] && fields[keys[i]] == filters[keys[i]]) {
@@ -90,6 +91,6 @@
       }
     }
 
-    window.customElements.define(RHDSearchQuery.is, RHDSearchQuery);
+    window.customElements.define(RHDPSearchQuery.is, RHDPSearchQuery);
   </script>
 </dom-module>

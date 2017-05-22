@@ -1,6 +1,6 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
 
-<dom-module id="rhd-search-box">
+<dom-module id="rhdp-search-box">
   <template>
     <style>
       :host {
@@ -82,8 +82,8 @@
   </template>
 
   <script>
-    class RHDSearchBox extends Polymer.Element {
-      static get is() { return 'rhd-search-box'; }
+    class RHDPSearchBox extends Polymer.Element {
+      static get is() { return 'rhdp-search-box'; }
       static get properties() {
         return {
           term: {
@@ -94,13 +94,17 @@
         };
       }
       connectedCallback() {
-        var loc = window.location.href.split('?');
-        this.set('text',loc.length > 1 ? loc.split('=')[1] : '');
-        this._handleChange();
+        
       }
       ready() {
         super.ready();
         this.addEventListener('keyup', e => { if(e.key == 'Enter') { this._handleChange(e) } });
+        /* To Do
+          Set text and term from querystring "q" value if present
+        */
+        var loc = window.location.href.split('?');
+        this.set('text',loc.length > 1 ? loc[1].split('=')[1] : '');
+        this._handleChange();
       }
 
       _handleChange() {
@@ -108,6 +112,6 @@
       }
     }
 
-    window.customElements.define(RHDSearchBox.is, RHDSearchBox);
+    window.customElements.define(RHDPSearchBox.is, RHDPSearchBox);
   </script>
 </dom-module>

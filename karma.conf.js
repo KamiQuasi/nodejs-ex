@@ -5,13 +5,31 @@ module.exports = function(config) {
   config.set({
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
+    //browsers: ['Chrome'],
     browsers: ['ChromeCanaryHeadless'],
+    //logLevel: config.LOG_DEBUG,
+    singleRun: true,
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['polymer','jasmine'],
     // list of files / patterns to load in the browser
     files: [
-      'tests/**/*.js'
-    ]
+      { pattern: 'bower_components/**', included: false, served: true, watched: true },
+      //{ pattern: 'public/components/*.html', included: false, served: true, watched: true },
+      'tests/**/*_spec.js'
+    ],
+    proxies: {
+      '/bower_components/': '/base/bower_components/',
+      '/public/components/': '/base/public/components/'
+    },
+    polymer: {
+      platform: 'bower_components/webcomponentsjs/webcomponents-lite.js',
+      src: [
+        //'bower_components/polymer/polymer.html',
+        'public/components/rhdp-search-result-count.html',
+        'public/components/rhdp-search-result.html',
+        'public/components/rhdp-search-filter-item.html'
+      ]
+    }
   })
 }

@@ -1,8 +1,8 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
-<link rel="import" href="/public/components/rhd-search-filter-group.html">
+<link rel="import" href="/public/components/rhdp-search-filter-group.html">
 <script src="/bower_components/stickybits/dist/stickybits.min.js"></script>
 
-<dom-module id="rhd-search-filters">
+<dom-module id="rhdp-search-filters">
   <template>
     <style>
       :host {
@@ -88,7 +88,7 @@
       <h2>[[title]] <a href="#" class="cancel" id="cancel" on-click="showModal">Cancel</a></h2>
       <div class="groups">
         <template is="dom-repeat" items="{{filters.facets}}">
-          <rhd-search-filter-group key="{{item.key}}" name="{{item.name}}" items="{{item.items}}"></rhd-search-filter-group>
+          <rhdp-search-filter-group key="{{item.key}}" name="{{item.name}}" items="{{item.items}}"></rhdp-search-filter-group>
         </template>
       </div>
       <div id="footer"><a href="#" on-click="clearOptions">Clear All</a> | <a href="#" on-click="showModal">Apply</a></div>
@@ -96,8 +96,8 @@
   </template>
 
   <script>
-    class RHDSearchFilters extends Polymer.Element {
-      static get is() { return 'rhd-search-filters'; }
+    class RHDPSearchFilters extends Polymer.Element {
+      static get is() { return 'rhdp-search-filters'; }
       connectedCallback() {
         super.connectedCallback();
         stickybits(this.$.footer, { verticalPosition: 'bottom' });
@@ -153,17 +153,17 @@
         return false;
       }
       clearOptions() {
-        let groups = this.getElementsByTagName('rhd-search-filter-group');;
+        var groups = this.getElementsByTagName('rhdp-search-filter-group');;
         console.log(groups);
         return false;
       }
       _setItems(e) {
         if(e.detail && e.detail.key) {
-          let l = this.filters.facets.length;
-          for(let i=0; i < l; i++) {
+          var l = this.filters.facets.length;
+          for(var i=0; i < l; i++) {
             if(this.filters.facets[i].key == e.detail.key) {
-              let j = this.filters.facets[i].items.length;
-              for(let k=0; k < j; k++) {
+              var j = this.filters.facets[i].items.length;
+              for(var k=0; k < j; k++) {
                 if(e.detail.facets.indexOf(this.filters.facets[i].items[k].value) > -1 ) {
                   this.set('filters.facets.'+i+'.items.'+k+'.active', true);
                 } else {
@@ -176,6 +176,6 @@
       }
     }
 
-    window.customElements.define(RHDSearchFilters.is, RHDSearchFilters);
+    window.customElements.define(RHDPSearchFilters.is, RHDPSearchFilters);
   </script>
 </dom-module>

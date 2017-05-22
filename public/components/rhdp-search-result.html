@@ -1,6 +1,6 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
 
-<dom-module id="rhd-search-result">
+<dom-module id="rhdp-search-result">
   <template>
     <style>
         :host {
@@ -48,8 +48,8 @@
   </template>
 
   <script>
-    class RHDSearchResult extends Polymer.Element {
-      static get is() { return 'rhd-search-result'; }
+    class RHDPSearchResult extends Polymer.Element {
+      static get is() { return 'rhdp-search-result'; }
       static get properties() {
         return {
           result: Object,
@@ -70,22 +70,22 @@
       }
       computeTitle(result) { return result.fields.sys_title[0]; }
       computeKind(result) {
-          let kind = result.fields.sys_type || "";
-          if (result.fields.sys_url_view[0].indexOf('/events/') >= 0) {
-              kind = "Event";
-          }
-          if (result.fields.sys_url_view[0].indexOf('/video/') >= 0) {
-              kind = "Video";
-          }
-          return kind;
+        var kind = result.fields.sys_type || "";
+        if (kind != '' && result.fields.sys_url_view[0].indexOf('/events/') >= 0) {
+            kind = "Event";
+        }
+        if (kind != '' && result.fields.sys_url_view[0].indexOf('/video/') >= 0) {
+            kind = "Video";
+        }
+        return kind;
        }
        computeCreated(result) {
-          let options = { month: 'long', day: 'numeric', year: 'numeric' }
-          let created = result.fields.sys_created ? '| ' + new Intl.DateTimeFormat('en-US', options).format(new Date(result.fields.sys_created)) : "";
-          return created;
+        var options = { month: 'long', day: 'numeric', year: 'numeric' }
+        var created = result.fields.sys_created ? '| ' + new Intl.DateTimeFormat('en-US', options).format(new Date(result.fields.sys_created)) : "";
+        return created;
        }
     }
 
-    window.customElements.define(RHDSearchResult.is, RHDSearchResult);
+    window.customElements.define(RHDPSearchResult.is, RHDPSearchResult);
   </script>
 </dom-module>
