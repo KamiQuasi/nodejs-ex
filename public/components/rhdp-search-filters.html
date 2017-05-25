@@ -1,6 +1,6 @@
-<link rel="import" href="/bower_components/polymer/polymer.html">
-<link rel="import" href="/public/components/rhdp-search-filter-group.html">
-<script src="/bower_components/stickybits/dist/stickybits.min.js"></script>
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="rhdp-search-filter-group.html">
+<script src="../stickybits/dist/stickybits.min.js"></script>
 
 <dom-module id="rhdp-search-filters">
   <template>
@@ -83,16 +83,31 @@
       }
 
     </style>
-    <a class="showBtn" on-click="showModal">Show Filters</a>
-    <div class="control" id="control">
-      <h2>[[title]] <a href="#" class="cancel" id="cancel" on-click="showModal">Cancel</a></h2>
-      <div class="groups">
-        <template is="dom-repeat" items="{{filters.facets}}">
-          <rhdp-search-filter-group key="{{item.key}}" name="{{item.name}}" items="{{item.items}}"></rhdp-search-filter-group>
+    <template is="dom-if" if="{{type=='active'}}">
+      <strong>Active Filters:</strong>
+      <ul>
+      <template is="dom-repeat" items="{{filters.facets}}">
+        <template is="dom-repeat" items="{{item.items}}">
+          <template is="dom-if" if="{{item.active}}">
+            <li>[[item.name]] <a href$="#[[item.value]]">X</a></li>
+          </template>
         </template>
+      </template>
+      </ul>
+      <a href="#" on-click="clearFilters">Clear All Filters</a>
+    </template>
+    <template is="dom-if" if="{{type!='active'}}">
+      <a class="showBtn" on-click="showModal">Show Filters</a>
+      <div class="control" id="control">
+        <h2>[[title]] <a href="#" class="cancel" id="cancel" on-click="showModal">Cancel</a></h2>
+        <div class="groups">
+          <template is="dom-repeat" items="{{filters.facets}}">
+            <rhdp-search-filter-group key="{{item.key}}" name="{{item.name}}" items="{{item.items}}"></rhdp-search-filter-group>
+          </template>
+        </div>
+        <div id="footer"><a href="#" on-click="clearOptions">Clear All</a> | <a href="#" on-click="showModal">Apply</a></div>
       </div>
-      <div id="footer"><a href="#" on-click="clearOptions">Clear All</a> | <a href="#" on-click="showModal">Apply</a></div>
-    </div>
+    </template>
   </template>
 
   <script>

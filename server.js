@@ -76,7 +76,9 @@ app.get('/', function (req, res) {
     res.render('index.html', { pageCountMessage : null});
   }
 });
-
+app.get('/build', function(req,res) {
+  res.render('build.html');
+})
 app.get('/search', function(req, res) {
   res.send(search);
 });

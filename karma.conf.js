@@ -26,9 +26,9 @@ module.exports = function(config) {
       platform: 'bower_components/webcomponentsjs/webcomponents-lite.js',
       src: [
         //'bower_components/polymer/polymer.html',
-        'public/components/rhdp-search-result-count.html',
-        'public/components/rhdp-search-result.html',
-        'public/components/rhdp-search-filter-item.html'
+        'components/rhdp-search/rhdp-search-result-count.html',
+        'components/rhdp-search/rhdp-search-result.html',
+        'components/rhdp-search/rhdp-search-filter-item.html'
       ]
     }
   })

@@ -1,9 +1,9 @@
-<link rel="import" href="/bower_components/polymer/polymer.html">
-<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
 <dom-module id="rhdp-search-query">
   <template>
-    <iron-ajax auto id="ajax" url="/search" 
-    params='{"part":"snippet", "q":"{{filters.term}}"}'
+    <iron-ajax auto id="ajax" url="[[url]]"
+    params='{"part":"snippet", "query":"{{filters.term}}", "size": "size{{limit}}"}'
     handle-as="json"
     on-response="adjustResults"></iron-ajax>
   </template>
@@ -20,7 +20,11 @@
               notify: true
           },
           limit: Number,
-          sort: String
+          sort: String,
+          url: {
+            type: String,
+            value: app ? app.dcp.url.developer_materials : '/search'
+          }
         };
       }
 
