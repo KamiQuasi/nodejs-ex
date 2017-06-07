@@ -65,14 +65,15 @@
         .desktop { display: none; }
       }
     </style>
-    <rhdp-search-query results="{{results}}" filters="{{filters}}" limit="10"></rhdp-search-query>
+    <h1>Search</h1>
+    <rhdp-search-query results="{{results}}" filters="{{filters}}" sort="{{sort}}" limit="{{limit}}"></rhdp-search-query>
     <rhdp-search-box term="{{filters.term}}"></rhdp-search-box>
     <div class="content">
       <rhdp-search-filters title="Filter By" filters="{{filters}}"></rhdp-search-filters>
       <rhdp-search-results results="[[results]]" infinite>
         <rhdp-search-filters type="active" filters="{{filters}}"></rhdp-search-filters>
         <rhdp-search-result-count count="{{results.hits.total}}" term="{{filters.term}}" class="desktop"></rhdp-search-result-count>
-        <rhdp-search-sort-page sort="most recent" page-size="10"></rhdp-search-sort-page>
+        <rhdp-search-sort-page sort="{{sort}}" page-size="{{limit}}"></rhdp-search-sort-page>
         <!--<rhdp-search-recommended></rhdp-search-recommended>-->
       </rhdp-search-results>
     </div> 
