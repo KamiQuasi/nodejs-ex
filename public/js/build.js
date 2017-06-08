@@ -188,8 +188,8 @@ System.register("rhdp-search-box", [], function (exports_2, context_2) {
                 __extends(RHDPSearchBox, _super);
                 function RHDPSearchBox() {
                     var _this = _super.call(this) || this;
+                    _this._term = '';
                     _this.name = 'Search Box';
-                    _this.term = '';
                     _this.template = function (strings, name, term) {
                         return "<form class=\"search-bar\" role=\"search\">\n        <div class=\"input-cont\">\n            <input value=\"" + term + "\" class=\"user-success user-search\" type=\"search\" id=\"query\" placeholder=\"Enter your search term\">\n        </div>\n        <button id=\"search-btn\">SEARCH</button>\n        </form>";
                     };
@@ -224,9 +224,7 @@ System.register("rhdp-search-box", [], function (exports_2, context_2) {
                         if (this._term === val)
                             return;
                         this._term = val;
-                        if(this.querySelector('input')) {
-                            this.querySelector('input').setAttribute('value', val);
-                        }                        
+                        this.querySelector('input').setAttribute('value', val);
                     },
                     enumerable: true,
                     configurable: true
@@ -487,7 +485,6 @@ System.register("rhdp-search-filter-group", ["rhdp-search-filter-item"], functio
                             _this.more = !_this.more;
                         }
                     });
-                    this.toggle = true;
                     var _a;
                 };
                 Object.defineProperty(RHDPSearchFilterGroup, "observedAttributes", {
@@ -1110,7 +1107,7 @@ System.register("rhdp-search-app", ["rhdp-search-query", "rhdp-search-box", "rhd
                 function RHDPSearchApp() {
                     var _this = _super.call(this) || this;
                     _this.name = 'Search';
-                    _this.template = "<div class=\"row\">\n    <div class=\"large-24 columns searchpage-middle\">\n        <div class=\"row\">\n            <div class=\"large-24 columns\">\n                <h1>" + _this.name + "</h1>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"large-6 columns\"></div>\n            <div class=\"large-18 columns\"</div>\n        </div>\n    </div></div>";
+                    _this.template = "<div class=\"row\">\n    <div class=\"large-24 medium-24 small-24 columns searchpage-middle\">\n        <div class=\"row\">\n            <div class=\"large-24 medium-24 small-24 columns\">\n                <h1>" + _this.name + "</h1>\n            </div>\n        </div>\n        <div class=\"row\">\n            <div class=\"large-6 medium-8 small-24 columns\"></div>\n            <div class=\"large-18 medium-16 small-24 columns\"</div>\n        </div>\n    </div></div>";
                     _this.query = new rhdp_search_query_1.RHDPSearchQuery();
                     _this.box = new rhdp_search_box_1.RHDPSearchBox();
                     _this.count = new rhdp_search_result_count_1.RHDPSearchResultCount();
@@ -1136,18 +1133,18 @@ System.register("rhdp-search-app", ["rhdp-search-query", "rhdp-search-box", "rhd
                                 name: 'PRODUCT',
                                 key: 'type',
                                 items: [
-                                    { key: 'eap', name: 'JBoss Enterprise Application Platform', value: ['eap'] },
+                                    { key: 'eap', name: 'JBoss Enterprise Application Platform', value: ['eap'], active: true },
                                     { key: 'webserver', name: 'JBoss Web Server', value: ['webserver'] },
                                     { key: 'datagrid', name: 'JBoss Data Grid', value: ['datagrid'] },
                                     { key: 'datavirt', name: 'JBoss Data Virtualization', value: ['datavirt'] },
-                                    { key: 'fuse', name: 'JBoss Fuse', value: ['fuse'] },
+                                    { key: 'fuse', name: 'JBoss Fuse', value: ['fuse'], active: true },
                                     { key: 'amq', name: 'JBoss A-MQ', value: ['amq'] },
                                     { key: 'brms', name: 'JBoss BRMS', value: ['brms'] },
                                     { key: 'bpmsuite', name: 'JBoss BPM Suite', value: ['bpmsuite'] },
                                     { key: 'devstudio', name: 'JBoss Developer Studio', value: ['devstudio'] },
                                     { key: 'cdk', name: 'Red Hat Container Development Kit', value: ['cdk'] },
                                     { key: 'developertoolset', name: 'Red Hat Developer Toolset', value: ['developertoolset'] },
-                                    { key: 'rhel', name: 'Red Hat Enterprise Linux', value: ['rhel'] },
+                                    { key: 'rhel', name: 'Red Hat Enterprise Linux', value: ['rhel'], active: true },
                                     { key: 'softwarecollections', name: 'Red Hat Software Collections', value: ['softwarecollections'] },
                                     { key: 'mobileplatform', name: 'Red Hat Mobile Application Platform', value: ['mobileplatform'] },
                                     { key: 'openshift', name: 'Red Hat OpenShift Container Platform', value: ['openshift'] }
