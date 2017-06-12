@@ -4,12 +4,16 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>Search Results | Red Hat Developers</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.35.3/es6-shim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.20.13/system.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.35.3/es6-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.0/es6-promise.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.20.13/system.src.js"></script>-->
+
+    <!--<script src="/public/js/native-shim.js"></script>-->
     <script>if (!window.customElements) { document.write('<!--'); }</script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.1/custom-elements-es5-adapter.js"></script>
     <!--! do not remove -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.1/webcomponents-loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.1/webcomponents-lite.js"></script>
 
   <link rel="stylesheet" href="/public/css/all.css">
   
@@ -139,7 +143,7 @@
   <div class="node__content">
     
                         <div property="schema:text" class="clearfix text-formatted field field--name-body field--type-text-with-summary field--label-hidden field__item">
-  <rhdp-search-app></rhdp-search-app>
+  <rhdp-search-app url="http://dcp.jboss.org/v2/rest/search/developer_materials"></rhdp-search-app>
 
   </div>
             
@@ -162,7 +166,7 @@
     <footer class="bottom">
       <div class="row">
         <div class="large-5 columns">
-          <a href="https://www.redhat.com" target="_blank" rel="noopener noreferrer"><img alt="Red Hat" class="rh-logo" src="/images/branding/RHLogo_white.svg" /></a>
+          <a href="https://www.redhat.com" target="_blank" rel="noopener noreferrer"><img alt="Red Hat" class="rh-logo" src="https://developers.redhat.com/images/branding/RHLogo_white.svg" /></a>
         </div>
          <div class="large-5 columns">
             <h3>Helpful Links</h3>
@@ -210,9 +214,9 @@
     <div class="row legal">
         <div class="large-5 medium-24 right columns">
             <a class="devnation-logo" href="http://www.devnation.org/" target="_blank" rel="noopener noreferrer"><img
-                src="/images/design/logo_devnation_footer.png" alt="Red Hat Summit"></a><a
+                src="https://developers.redhat.com/images/design/logo_devnation_footer.png" alt="Red Hat Summit"></a><a
                 class="summit-logo" href="http://www.redhat.com/summit/" target="_blank" rel="noopener noreferrer"><img
-                src="/images/design/logo-summit.png" alt="Red Hat Summit"></a>
+                src="https://developers.redhat.com/images/design/logo-summit.png" alt="Red Hat Summit"></a>
         </div>
         <div class="large-19 columns">
             <ul class="inline-list">
